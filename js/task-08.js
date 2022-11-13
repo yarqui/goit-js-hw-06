@@ -1,13 +1,24 @@
-// 1. Обробка відправлення форми form.login - form
-// повинна відбуватися відповідно до події submit.
+const formRef = document.querySelector("form.login-form");
 
-// 2. Під час відправлення форми сторінка не повинна перезавантажуватися. PREVENT DEFAULT!!!
-//
-// 3. Якщо у формі є незаповнені поля, виводь alert
-// з попередженням про те, що всі поля повинні бути заповнені. ???ANY() METHOD???
+const formCheck = (event) => {
+  event.preventDefault();
 
-// 4. Якщо користувач заповнив усі поля і відправив форму, збери значення полів
-// в об'єкт, де ім'я поля буде ім'ям властивості, а значення поля - значенням властивості.
-// Для доступу до елементів форми використовуй властивість elements.
+  const {
+    elements: { email, password },
+  } = event.currentTarget;
 
-// 5. Виведи об'єкт із введеними даними в консоль і очисти значення полів форми методом reset.
+  if (email.value === "" || password.value === "") {
+    return alert("All fields must be filled");
+  }
+
+  const submitData = {
+    [email.name]: email.value,
+    [password.name]: password.value,
+  };
+
+  console.log(submitData);
+
+  event.currentTarget.reset();
+};
+
+formRef.addEventListener("submit", formCheck);
