@@ -9,11 +9,6 @@ const getRandomHexColor = () => {
     .padStart(6, 0)}`;
 };
 
-const getAmount = () => {
-  const amount = inputRef.value;
-  return amount;
-};
-
 const createBoxes = (amount) => {
   let boxSize = 30;
   let str = `<div style="width:${boxSize}px; height:${boxSize}px"></div>`;
@@ -23,8 +18,12 @@ const createBoxes = (amount) => {
     multiBox += str;
     str = `<div style="width:${(boxSize += 10)}px; height:${boxSize}px"></div>`;
   }
-  boxesRef.insertAdjacentHTML("afterbegin", multiBox);
+  boxesRef.insertAdjacentHTML("beforeend", multiBox);
 };
 
-inputRef.addEventListener("change", getAmount);
+const doMagic = (event) => {
+  createBoxes(event.currentTarget.value);
+};
+
 createBtn.addEventListener("click", createBoxes);
+inputRef.addEventListener("change", doMagic);
