@@ -11,19 +11,24 @@ const getRandomHexColor = () => {
 
 const createBoxes = (amount) => {
   let boxSize = 30;
-  let str = `<div style="width:${boxSize}px; height:${boxSize}px"></div>`;
-  let multiBox = "";
+  let str = `<div style="width:${boxSize}px; height:${boxSize}px; background-color: ${getRandomHexColor()}"></div>`;
+  let multiString = "";
 
   for (let i = 0; i < amount; i += 1) {
-    multiBox += str;
-    str = `<div style="width:${(boxSize += 10)}px; height:${boxSize}px"></div>`;
+    multiString += str;
+    str = `<div style="width:${(boxSize += 10)}px; height:${boxSize}px; background-color: ${getRandomHexColor()}"></div>`;
   }
-  boxesRef.insertAdjacentHTML("beforeend", multiBox);
+  boxesRef.insertAdjacentHTML("beforeend", multiString);
 };
 
-const doMagic = (event) => {
-  createBoxes(event.currentTarget.value);
+const onClickButtonDestroy = () => {
+  boxesRef.innerHTML = "";
+  inputRef.value = "";
 };
 
-createBtn.addEventListener("click", createBoxes);
-inputRef.addEventListener("change", doMagic);
+const onClickButtonCreate = () => {
+  createBoxes(inputRef.value);
+};
+
+createBtn.addEventListener("click", onClickButtonCreate);
+destroyBtn.addEventListener("click", onClickButtonDestroy);
